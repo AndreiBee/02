@@ -5,7 +5,7 @@ set(PROJECT_VESRION 1.0.${PATCH_VERSION})
 
 project(ip_filter VERSION ${PROJECT_VESRION})
 
-# find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
 # configure_file(version.h.in version.h)
 
@@ -14,7 +14,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED On)
 
 add_executable(ipFilter ip_filter.cpp)
 # add_library(helloworld lib.cpp)
-# add_executable(test_version test_version.cpp)
+add_executable(ipFilterTest ip_filter_test.cpp)
 
 
 # set_target_properties(helloworld_cli helloworld test_version PROPERTIES
@@ -73,6 +73,6 @@ add_executable(ipFilter ip_filter.cpp)
 
 # include(CPack)
 
-# enable_testing()
+enable_testing()
 
-# add_test(test_version test_version)
+add_test(ipFilterTest ipFilterTest)
