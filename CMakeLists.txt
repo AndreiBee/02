@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
-project(IPParser VERSION 1.0.0)
+
+set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
+set(PROJECT_VESRION 0.0.${PATCH_VERSION})
+
+project(IPParser VERSION ${PROJECT_VERSION})
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
