@@ -18,3 +18,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 add_executable(runTests tests/test_IPParser.cpp src/IPParser.cpp)
 
 target_link_libraries(runTests ${Boost_LIBRARIES})
+
+enable_testing()
+
+add_test(runTests runTests)
