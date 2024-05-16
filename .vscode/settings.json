@@ -45,6 +45,27 @@
     "streambuf": "cpp",
     "cinttypes": "cpp",
     "typeinfo": "cpp",
-    "filesystem": "cpp"
+    "filesystem": "cpp",
+    "cstring": "cpp",
+    "ctime": "cpp",
+    "*.ipp": "cpp",
+    "strstream": "cpp",
+    "bitset": "cpp",
+    "chrono": "cpp",
+    "codecvt": "cpp",
+    "compare": "cpp",
+    "complex": "cpp",
+    "concepts": "cpp",
+    "list": "cpp",
+    "map": "cpp",
+    "set": "cpp",
+    "ratio": "cpp",
+    "iomanip": "cpp",
+    "ranges": "cpp",
+    "stop_token": "cpp",
+    "thread": "cpp",
+    "cfenv": "cpp",
+    "typeindex": "cpp",
+    "variant": "cpp"
   }
 }
