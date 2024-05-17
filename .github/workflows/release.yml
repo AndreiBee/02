@@ -19,7 +19,7 @@ jobs:
 
       - name: Configure and build
         run: |
-          cmake -Bbuild -S. -DPATCH_VERSION=${{ github.run_number }}
+          cmake . -DPATCH_VERSION=${{ github.run_number }}
           cmake --build build
 
       - name: Run tests
@@ -51,6 +51,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/IPParser-1.0.${{ github.run_number }}-Linux.deb
-          asset_name: IPParser-1.0.${{ github.run_number }}-Linux.deb
+          asset_path: ./build/IPParser-0.0.${{ github.run_number }}-Linux.deb
+          asset_name: IPParser-0.0.${{ github.run_number }}-Linux.deb
           asset_content_type: application/vnd.debian.binary-package
