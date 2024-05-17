@@ -41,8 +41,8 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Check directory
-        run: tree
+      - name: List Build Directory
+        run: ls -la build
 
       - name: Upload Release Asset
         id: upload-release-asset
@@ -51,6 +51,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./IPParser-1.0.${{ github.run_number }}-Linux.deb
+          asset_path: ./build/IPParser-1.0.${{ github.run_number }}-Linux.deb
           asset_name: IPParser-1.0.${{ github.run_number }}-Linux.deb
           asset_content_type: application/vnd.debian.binary-package
