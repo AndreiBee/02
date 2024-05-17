@@ -26,6 +26,9 @@ jobs:
       - name: Configure CMake
         run: cmake -S . -B build -DCPACK_PACKAGE_VERSION=${{ github.run_number }}
 
+      - name: List build directory
+        run: dir build
+
       - name: Build project
         run: cmake --build build --target all
 
