@@ -23,10 +23,9 @@ add_executable(runTests tests/test_IPParser.cpp src/IPParser.cpp)
 
 target_link_libraries(runTests ${Boost_LIBRARIES})
 
-install(TARGETS IPParser RUNTIME DESTINATION bin)
 # CParck configuration
 include(CPack)
-set(CPACK_GENERATOR DEB)
+set(CPACK_GENERATOR "DEB")
 set(CPACK_PACKAGE_NAME "IPParser")
 set(CPACK_PACKAGE_VERSION "1.0.${PATCH_VERSION}")
 # set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
