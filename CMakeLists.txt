@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
-set(PROJECT_VESRION 0.0.${PATCH_VERSION})
+set(PROJECT_VESRION 1.0.${PATCH_VERSION})
 
 project(IPParser VERSION ${PROJECT_VERSION})
 
@@ -23,8 +23,9 @@ add_executable(runTests tests/test_IPParser.cpp src/IPParser.cpp)
 
 target_link_libraries(runTests ${Boost_LIBRARIES})
 
+install(TARGETS IPParser RUNTIME DESTINATION bin)
+# CParck configuration
 set(CPACK_GENERATOR DEB)
-
 set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
 set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
