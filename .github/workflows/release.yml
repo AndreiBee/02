@@ -30,7 +30,7 @@ jobs:
         run: dir build
 
       - name: Build project
-        run: cmake --build build --target all
+        run: cmake --build build --target ALL_BUILD
 
       - name: Run tests
         run: ctest --test-dir build --output-on-failure
