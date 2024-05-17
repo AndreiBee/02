@@ -15,6 +15,7 @@ include_directories(include)
 add_executable(IPParser src/main.cpp src/IPParser.cpp)
 
 # Find Boost library
+set(BOOST_ROOT "C:/ProgramData/chocolatey/lib/boost-msvc-14.2/tools/boost_1_74_0")
 find_package(Boost 1.65 REQUIRED COMPONENTS unit_test_framework)
 include_directories(${Boost_INCLUDE_DIRS})
 
