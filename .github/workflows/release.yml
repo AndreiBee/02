@@ -42,7 +42,7 @@ jobs:
           prerelease: false
 
       - name: Check directory
-        run: ls -la
+        run: tree
 
       - name: Upload Release Asset
         id: upload-release-asset
