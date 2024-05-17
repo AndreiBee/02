@@ -23,15 +23,6 @@ jobs:
           choco install -y boost-msvc-14.2
           choco install -y cmake --installargs 'ADD_CMAKE_TO_PATH=System'
 
-      - name: Add Boost to PATH
-        run: echo "C:\Program Files\boost\boost_1_74_0\lib64-msvc-14.2" >> $env:GITHUB_PATH
-
-      - name: Print Environment Variables
-        run: echo $env:BOOST_ROOT
-
-      - name: List Boost Directory
-        run: dir "C:\Program Files\boost\boost_1_74_0\lib64-msvc-14.2"
-
       - name: Configure CMake
         run: cmake -S . -B build -DCPACK_PACKAGE_VERSION=${{ github.run_number }}
 
