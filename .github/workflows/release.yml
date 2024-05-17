@@ -26,6 +26,7 @@ jobs:
         run: |
           cd build
           ctest --output-on-failure
+          ls -la
 
       - name: Package
         run: cmake --build build --target package
