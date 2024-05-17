@@ -24,9 +24,8 @@ add_executable(runTests tests/test_IPParser.cpp src/IPParser.cpp)
 target_link_libraries(runTests ${Boost_LIBRARIES})
 
 # CParck configuration
-include(CPack)
-set(CPACK_GENERATOR "DEB")
-set(CPACK_PACKAGE_NAME "IPParser")
+set(CPACK_GENERATOR DEB)
+# set(CPACK_PACKAGE_NAME "IPParser")
 # set(CPACK_PACKAGE_VERSION "1.0.${PATCH_VERSION}")
 # set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
 set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
@@ -34,6 +33,7 @@ set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
 set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 set(CPACK_PACKAGE_CONTACT example@example.com)
 
+include(CPack)
 
 enable_testing()
 
