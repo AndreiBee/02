@@ -24,7 +24,7 @@ jobs:
           choco install -y cmake --installargs 'ADD_CMAKE_TO_PATH=System'
 
       - name: Get info about Boost
-        run: choco info boost
+        run: choco info boost-msvc-14.2
         shell: pwsh
 
       - name: Configure CMake
