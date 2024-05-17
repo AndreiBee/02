@@ -25,6 +25,7 @@ target_link_libraries(runTests ${Boost_LIBRARIES})
 
 install(TARGETS IPParser RUNTIME DESTINATION bin)
 # CParck configuration
+include(CPack)
 set(CPACK_GENERATOR "DEB")
 set(CPACK_PACKAGE_NAME "IPParser")
 set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
@@ -39,7 +40,6 @@ set(CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Your Name <your.email@example.com>")
 set(CPACK_PACKAGE_DESCRIPTION "A simple IP parser application")
 
-include(CPack)
 
 enable_testing()
 
