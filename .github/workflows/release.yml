@@ -23,8 +23,8 @@ jobs:
           choco install -y boost-msvc-14.2
           choco install -y cmake --installargs 'ADD_CMAKE_TO_PATH=System'
 
-      - name: List Boost Directory
-        run: Get-ChildItem -Path 'C:\Program Files\Boost' -Recurse
+      - name: Get info about Boost
+        run: choco info boost
         shell: pwsh
 
       - name: Configure CMake
