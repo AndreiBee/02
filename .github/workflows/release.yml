@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: [windows-latest]
+    runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -22,8 +22,8 @@ jobs:
         id: cache-boost
         uses: actions/cache@v2
         with:
-          path: C:\local\boost_1_84_0
-          key: boost-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt') }}-1.84.0
+          path: C:\local\boost_1_81_0
+          key: boost-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt') }}-1.81.0
           restore-keys: |
             boost-${{ runner.os }}-
 
@@ -31,9 +31,9 @@ jobs:
         if: steps.cache-boost.outputs.cache-hit != 'true'
         run: |
           choco install -y cmake --installargs 'ADD_CMAKE_TO_PATH=System'
-          curl -LO https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_1_84_0.zip
-          tar -xf boost_1_84_0.zip -C C:\local
-          cd C:\local\boost_1_84_0
+          curl -LO https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_1_81_0.zip
+          tar -xf boost_1_81_0.zip -C C:\local
+          cd C:\local\boost_1_81_0
           bootstrap
           .\b2 --with-test install
 
