@@ -18,24 +18,10 @@ jobs:
       - name: Set up CMake
         uses: jwlawson/actions-setup-cmake@v1.10
 
-      - name: Cache Boost
-        id: cache-boost
-        uses: actions/cache@v2
-        with:
-          path: C:\local\boost_1_81_0
-          key: boost-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt') }}-1.81.0
-          restore-keys: |
-            boost-${{ runner.os }}-
-
-      - name: Install Boost unit_test_framework
-        if: steps.cache-boost.outputs.cache-hit != 'true'
+      - name: Install dependencies
         run: |
           choco install -y cmake --installargs 'ADD_CMAKE_TO_PATH=System'
-          curl -LO https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_1_81_0.zip
-          tar -xf boost_1_81_0.zip -C C:\local
-          cd C:\local\boost_1_81_0
-          bootstrap
-          .\b2 --with-test install
+          choco install -y boost-msvc-14.2
 
       - name: Configure CMake
         run: cmake -S . -B build -DCPACK_PACKAGE_VERSION=${{ github.run_number }}
