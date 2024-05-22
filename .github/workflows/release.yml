@@ -21,24 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           choco install -y cmake --installargs 'ADD_CMAKE_TO_PATH=System'
-
-      - name: Install boost
-        uses: MarkusJx/install-boost@v2.4.5
-        id: install-boost
-        with:
-          # REQUIRED: Specify the required boost version
-          # A list of supported versions can be found here:
-          # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
-          boost_version: 1.84.0
-          # OPTIONAL: Specify a toolset
-          toolset: msvc
-          # OPTIONAL: Specify a custon install location
-          # boost_install_dir: C:\some_directory
-          # OPTIONAL: Specify a platform version
-          platform_version: 2022
-
-          # NOTE: If a boost version matching all requirements cannot be found,
-          # this build step will fail
+          choco install -y boost-msvc-14.2
 
       - name: Configure CMake
         run: cmake -S . -B build -DCPACK_PACKAGE_VERSION=${{ github.run_number }}
