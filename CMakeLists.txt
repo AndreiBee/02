@@ -33,7 +33,7 @@ add_executable(runTests tests/test_IPParser.cpp src/IPParser.cpp)
 
 target_include_directories(runTests PUBLIC ${Boost_INCLUDE_DIRS})
 message(STATUS "Boost_LIBRARIES: ${Boost_LIBRARIES}")
-target_link_libraries(runTests ${Boost_LIBRARIES})
+target_link_libraries(runTests Boost::unit_test_framework)
 
 # CParck configuration
 set(CPACK_GENERATOR "NSIS;ZIP")
