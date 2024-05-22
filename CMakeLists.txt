@@ -26,13 +26,13 @@ add_executable(IPParser src/main.cpp src/IPParser.cpp)
 
 # Find Boost library
 find_package(Boost 1.65 REQUIRED COMPONENTS unit_test_framework)
-# include_directories(${Boost_INCLUDE_DIRS})
+include_directories(${Boost_INCLUDE_DIRS})
 
 # Add executable for the tests
 add_executable(runTests tests/test_IPParser.cpp src/IPParser.cpp)
 
-target_include_directories(runTests PUBLIC ${Boost_INCLUDE_DIRS})
 message(STATUS "Boost_LIBRARIES: ${Boost_LIBRARIES}")
+target_link_libraries(runTests LINK_PUBLIC ${Boost_LIBRARIES})
 target_link_libraries(runTests Boost::unit_test_framework)
 
 # CParck configuration
