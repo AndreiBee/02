@@ -8,15 +8,15 @@ project(IPParser VERSION ${PROJECT_VERSION})
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
 
-SET(Boost_USE_STATIC_LIBS OFF)
-IF( WIN32 )
+SET(Boost_USE_STATIC_LIBS ON)
+# IF( WIN32 )
     # The auto-linking feature has problems with USE_STATIC_LIBS off, so we use
     # BOOST_ALL_NO_LIB to turn it off.
     # Several boost libraries headers aren't configured correctly if
     # USE_STATIC_LIBS is off, so we explicitly say they are dynamic with the
     # remaining definitions.
-    ADD_DEFINITIONS(-DBOOST_ALL_NO_LIB -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_IOSTREAMS_DYN_LINK -DBOOST_THREAD_DYN_LINK)
-ENDIF( )
+#     ADD_DEFINITIONS(-DBOOST_ALL_NO_LIB -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_IOSTREAMS_DYN_LINK -DBOOST_THREAD_DYN_LINK)
+# ENDIF( )
 
 # Include directories
 include_directories(include)
@@ -25,18 +25,17 @@ include_directories(include)
 add_executable(IPParser src/main.cpp src/IPParser.cpp)
 
 # Find Boost library
-find_package(Boost 1.65 REQUIRED COMPONENTS unit_test_framework)
+find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 
 # Add executable for the tests
 add_executable(runTests tests/test_IPParser.cpp src/IPParser.cpp)
 
-message(STATUS "Boost_LIBRARIES: ${Boost_LIBRARIES}")
+message(STATUS "Boost_UNIT_TEST_FRAMEWORK_LIBRARY: ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}")
 # target_link_libraries(runTests LINK_PUBLIC ${Boost_LIBRARIES})
-target_link_libraries(runTests 
-${Boost_FILESYSTEM_LIBRARY}
-${Boost_SYSTEM_LIBRARY}
-${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+target_link_libraries(runTests ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+# ${Boost_FILESYSTEM_LIBRARY}
+# ${Boost_SYSTEM_LIBRARY}
 
 # CParck configuration
 set(CPACK_GENERATOR "NSIS;ZIP")
