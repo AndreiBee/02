@@ -23,6 +23,9 @@ jobs:
           choco install -y cmake --installargs 'ADD_CMAKE_TO_PATH=System'
           choco install -y boost-msvc-14.2
 
+      - name: Install NSIS
+        run: choco install nsis
+
       - name: Configure CMake
         run: cmake -S . -B build -DCPACK_PACKAGE_VERSION=${{ github.run_number }}
 
@@ -37,6 +40,19 @@ jobs:
 
       - name: Package with CPack
         run: cmake --build build --target package
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: package
+          path: build/_CPack_Packages/win64/NSIS/
+
+      - name: Upload NSIS Output Log
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: NSISOutputLog
+          path: build/_CPack_Packages/win64/NSIS/NSISOutput.log
 
       - name: List build directory
         run: dir build
