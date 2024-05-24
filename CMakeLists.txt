@@ -41,8 +41,6 @@ endif( WIN32 )
 # ${Boost_FILESYSTEM_LIBRARY}
 # ${Boost_SYSTEM_LIBRARY}
 
-include(CPack)
-
 # CParck configuration
 if ( WIN32 )
     set(CPACK_GENERATOR "NSIS;ZIP")
@@ -61,6 +59,8 @@ if ( WIN32 )
 else()
     set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-Linux")
 endif( WIN32 )
+
+include(CPack)
 
 enable_testing()
 
