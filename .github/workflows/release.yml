@@ -15,6 +15,14 @@ jobs:
         with:
           submodules: true
 
+      - name: Enable step debug logging
+        run: |
+          echo "::group::Set up Debug Logging"
+          echo "Step Debug Logging Enabled"
+          echo "::endgroup::"
+        env:
+          ACTIONS_STEP_DEBUG: true
+
       - name: Set up CMake
         uses: jwlawson/actions-setup-cmake@v1.10
 
@@ -22,9 +30,6 @@ jobs:
         run: |
           choco install -y cmake --installargs 'ADD_CMAKE_TO_PATH=System'
           choco install -y boost-msvc-14.2
-
-      - name: Install NSIS
-        run: choco install nsis
 
       - name: Configure CMake
         run: cmake -S . -B build -DCPACK_PACKAGE_VERSION=${{ github.run_number }}
@@ -48,14 +53,6 @@ jobs:
           release_name: Release ${{ github.run_number }}
           draft: false
           prerelease: false
-
-      - name: Enable step debug logging
-        run: |
-          echo "::group::Set up Debug Logging"
-          echo "Step Debug Logging Enabled"
-          echo "::endgroup::"
-        env:
-          ACTIONS_STEP_DEBUG: true
 
       - name: Package with CPack
         run: cmake --build build --target package
