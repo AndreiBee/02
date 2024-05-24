@@ -46,9 +46,6 @@ jobs:
       - name: Package with CPack
         run: cmake --build build --target package
 
-      - name: List NSIS directory contents
-        run: dir build\\_CPack_Packages\\win64\\NSIS
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:

@@ -14,7 +14,7 @@ Page instfiles
 ; Sections
 Section "MainSection" SEC01
     SetOutPath "$INSTDIR"
-    File "@CMAKE_BINARY_DIR@/bin/IPParser.exe"
+    File "@CMAKE_BINARY_DIR@/Debug/IPParser.exe"
     ; Add more files if needed
     ; File "path/to/another/file.ext"
 SectionEnd
