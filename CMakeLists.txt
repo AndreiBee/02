@@ -41,26 +41,51 @@ endif( WIN32 )
 # ${Boost_FILESYSTEM_LIBRARY}
 # ${Boost_SYSTEM_LIBRARY}
 
-# CParck configuration
+# Define the output directories
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+# Include NSIS packaging
+if(WIN32)
+    find_program(NSIS_MAKENSIS_EXECUTABLE makensis)
+    if(NSIS_MAKENSIS_EXECUTABLE)
+        # Create an NSIS script
+        set(NSIS_SCRIPT "${CMAKE_BINARY_DIR}/installer.nsi")
+        configure_file(
+            "${CMAKE_SOURCE_DIR}/installer.nsi.in"
+            "${NSIS_SCRIPT}"
+            @ONLY
+        )
+
+        # Add a custom target to create the installer
+        add_custom_target(
+            package
+            COMMAND ${NSIS_MAKENSIS_EXECUTABLE} ${NSIS_SCRIPT}
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+            COMMENT "Generating NSIS installer"
+            VERBATIM
+        )
+
+        # Ensure the executable is built before packaging
+        add_dependencies(package IPParser)
+    else()
+        message(WARNING "NSIS not found, installer will not be generated")
+    endif()
+endif()
+
+# CPack configuration
 if ( WIN32 )
     set(CPACK_GENERATOR "NSIS;ZIP")
 else()
     set(CPACK_GENERATOR "DEB")
+    set(CPACK_PACKAGE_NAME "IPParser")
+    set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+    set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+    set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+    set(CPACK_PACKAGE_CONTACT example@example.com)
+    include(CPack)
 endif( WIN32 )
-
-set(CPACK_PACKAGE_NAME "IPParser")
-set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
-set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
-set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
-set(CPACK_PACKAGE_CONTACT example@example.com)
-
-if ( WIN32 )
-    # set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-win64")
-else()
-    # set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-Linux")
-endif( WIN32 )
-
-include(CPack)
 
 enable_testing()
 
