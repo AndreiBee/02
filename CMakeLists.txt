@@ -37,6 +37,8 @@ target_link_libraries(runTests ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 # ${Boost_FILESYSTEM_LIBRARY}
 # ${Boost_SYSTEM_LIBRARY}
 
+include(CPack)
+
 # CParck configuration
 set(CPACK_GENERATOR "NSIS;ZIP")
 set(CPACK_PACKAGE_NAME "IPParser")
@@ -45,8 +47,6 @@ set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
 set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 set(CPACK_PACKAGE_CONTACT example@example.com)
 set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-win64")
-
-include(CPack)
 
 enable_testing()
 
