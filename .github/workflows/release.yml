@@ -40,6 +40,9 @@ jobs:
       - name: List build directory
         run: dir build
 
+      - name: List Debug directory
+        run: dir build/Debug
+
       - name: Run tests
         run: ctest --test-dir build --output-on-failure
 
