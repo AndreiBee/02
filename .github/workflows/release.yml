@@ -46,6 +46,9 @@ jobs:
       - name: Package with CPack
         run: cmake --build build --target package
 
+      - name: List NSIS directory contents
+        run: dir build\\_CPack_Packages\\win64\\NSIS
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
@@ -72,6 +75,7 @@ jobs:
           release_name: Release ${{ github.run_number }}
           draft: false
           prerelease: false
+
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
