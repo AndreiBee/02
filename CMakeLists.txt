@@ -32,21 +32,35 @@ include_directories(${Boost_INCLUDE_DIRS})
 add_executable(runTests tests/test_IPParser.cpp src/IPParser.cpp)
 
 message(STATUS "Boost_UNIT_TEST_FRAMEWORK_LIBRARY: ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}")
-# target_link_libraries(runTests LINK_PUBLIC ${Boost_LIBRARIES})
-target_link_libraries(runTests ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+
+if( WIN32 )
+    target_link_libraries(runTests ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+else()
+    target_link_libraries(runTests LINK_PUBLIC ${Boost_LIBRARIES})
+endif( WIN32 )
 # ${Boost_FILESYSTEM_LIBRARY}
 # ${Boost_SYSTEM_LIBRARY}
 
 include(CPack)
 
 # CParck configuration
-set(CPACK_GENERATOR "NSIS;ZIP")
+if ( WIN32 )
+    set(CPACK_GENERATOR "NSIS;ZIP")
+else()
+    set(CPACK_GENERATOR "DEB")
+endif( WIN32 )
+
 set(CPACK_PACKAGE_NAME "IPParser")
 set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
 set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 set(CPACK_PACKAGE_CONTACT example@example.com)
-set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-win64")
+
+if ( WIN32 )
+    set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-win64")
+else()
+    set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-Linux")
+endif( WIN32 )
 
 enable_testing()
 

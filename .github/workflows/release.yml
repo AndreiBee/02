@@ -98,10 +98,12 @@ jobs:
         run: |
           cmake -Bbuild -S. -DPATCH_VERSION=${{ github.run_number }}
           cmake --build build
+
       - name: Run tests
         run: |
           cd build
           ctest --output-on-failure
+
       - name: Package
         run: cmake --build build --target package
 
