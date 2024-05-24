@@ -44,7 +44,7 @@ jobs:
         run: ctest --test-dir build --output-on-failure
 
       - name: Package with CPack
-        run: cmake --build build -DCMAKE_BUILD_TYPE=Release --target package
+        run: cmake --build build --target package -DCMAKE_BUILD_TYPE=Release
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
