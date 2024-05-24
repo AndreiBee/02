@@ -7,7 +7,7 @@ on:
       - feature/github_actions
 
 jobs:
-  build:
+  build-windows:
     runs-on: windows-latest
     steps:
       - name: Checkout code
@@ -55,7 +55,7 @@ jobs:
           prerelease: false
 
       - name: Package with CPack
-        run: cmake --build build --target package
+        run: cmake --build build -DCMAKE_BUILD_TYPE=Release --target package
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
@@ -83,3 +83,49 @@ jobs:
           asset_path: ./build/IPParser-1.0.${{ github.run_number }}-win64.exe
           asset_name: IPParser-1.0.${{ github.run_number }}-win64.exe
           asset_content_type: application/vnd.microsoft.portable-executable
+
+  build-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install Boost Test
+        run: sudo apt-get update && sudo apt-get install libboost-test-dev -y
+
+      - name: Configure and build
+        run: |
+          cmake -Bbuild -S. -DPATCH_VERSION=${{ github.run_number }}
+          cmake --build build
+      - name: Run tests
+        run: |
+          cd build
+          ctest --output-on-failure
+      - name: Package
+        run: cmake --build build --target package
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
+          draft: false
+          prerelease: false
+
+      - name: List Build Directory
+        run: ls -la build
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/IPParser-1.0.${{ github.run_number }}-Linux.deb
+          asset_name: IPParser-1.0.${{ github.run_number }}-Linux.deb
+          asset_content_type: application/vnd.debian.binary-package
