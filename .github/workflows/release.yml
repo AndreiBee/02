@@ -29,11 +29,11 @@ jobs:
       - name: Configure CMake
         run: cmake -S . -B build -DCPACK_PACKAGE_VERSION=${{ github.run_number }}
 
-      - name: List build directory
-        run: dir build
-
       - name: Build project
         run: cmake --build build --target ALL_BUILD
+
+      - name: List build directory
+        run: dir build
 
       - name: Run tests
         run: ctest --test-dir build --output-on-failure
@@ -48,6 +48,14 @@ jobs:
           release_name: Release ${{ github.run_number }}
           draft: false
           prerelease: false
+
+      - name: Enable step debug logging
+        run: |
+          echo "::group::Set up Debug Logging"
+          echo "Step Debug Logging Enabled"
+          echo "::endgroup::"
+        env:
+          ACTIONS_STEP_DEBUG: true
 
       - name: Package with CPack
         run: cmake --build build --target package
