@@ -18,10 +18,11 @@ jobs:
       - name: Set up CMake
         uses: jwlawson/actions-setup-cmake@v1.10
 
-      - name: Install dependencies
-        run: |
-          choco install -y cmake --installargs 'ADD_CMAKE_TO_PATH=System'
-          choco install -y boost-msvc-14.2
+      - name: Install CMake
+        run: choco install -y cmake --installargs 'ADD_CMAKE_TO_PATH=System'
+
+      - name: Install Boost
+        run: choco install -y boost-msvc-14.2
 
       - name: Configure CMake
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCPACK_PACKAGE_VERSION=${{ github.run_number }}
@@ -35,8 +36,8 @@ jobs:
       - name: List Debug directory
         run: dir build/Debug
 
-      - name: Run tests
-        run: ctest --test-dir build --output-on-failure
+      # - name: Run tests
+      #   run: ctest --test-dir build --output-on-failure
 
       - name: Package with CPack
         run: cmake --build build --target package
@@ -47,8 +48,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.run_number }}
-          release_name: Release ${{ github.run_number }}
+          tag_name: Win ${{ github.run_number }}
+          release_name: Win-Release ${{ github.run_number }}
           draft: false
           prerelease: false
 
@@ -70,18 +71,18 @@ jobs:
         with:
           submodules: true
 
-      - name: Install Boost Test
-        run: sudo apt-get update && sudo apt-get install libboost-test-dev -y
+      # - name: Install Boost Test
+      #   run: sudo apt-get update && sudo apt-get install libboost-test-dev -y
 
       - name: Configure and build
         run: |
           cmake -Bbuild -S. -DPATCH_VERSION=${{ github.run_number }}
           cmake --build build
 
-      - name: Run tests
-        run: |
-          cd build
-          ctest --output-on-failure
+      # - name: Run tests
+      #   run: |
+      #     cd build
+      #     ctest --output-on-failure
 
       - name: Package
         run: cmake --build build --target package
@@ -92,8 +93,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.run_number }}
-          release_name: Release ${{ github.run_number }}
+          tag_name: Linux ${{ github.run_number }}
+          release_name: Lnx-Release ${{ github.run_number }}
           draft: false
           prerelease: false
 

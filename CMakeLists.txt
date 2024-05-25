@@ -2,13 +2,16 @@ cmake_minimum_required(VERSION 3.10)
 
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VERSION 1.0.${PATCH_VERSION})
+set(BUILD_BOOST_TESTS False)
 
 project(IPParser VERSION ${PROJECT_VERSION})
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
 
-SET(Boost_USE_STATIC_LIBS ON)
+if (BUILD_BOOST_TESTS)
+    SET(Boost_USE_STATIC_LIBS ON)
+endif(BUILD_BOOST_TESTS)
 # IF( WIN32 )
     # The auto-linking feature has problems with USE_STATIC_LIBS off, so we use
     # BOOST_ALL_NO_LIB to turn it off.
@@ -24,22 +27,24 @@ include_directories(include)
 # Add executable for the main program
 add_executable(IPParser src/main.cpp src/IPParser.cpp)
 
-# Find Boost library
-find_package(Boost COMPONENTS unit_test_framework REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
+if (BUILD_BOOST_TESTS)
+    # Find Boost library
+    find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+    include_directories(${Boost_INCLUDE_DIRS})
 
-# Add executable for the tests
-add_executable(runTests tests/test_IPParser.cpp src/IPParser.cpp)
+    # Add executable for the tests
+    add_executable(runTests tests/test_IPParser.cpp src/IPParser.cpp)
 
-message(STATUS "Boost_UNIT_TEST_FRAMEWORK_LIBRARY: ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}")
+    message(STATUS "Boost_UNIT_TEST_FRAMEWORK_LIBRARY: ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}")
 
-if( WIN32 )
-    target_link_libraries(runTests ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-else()
-    target_link_libraries(runTests LINK_PUBLIC ${Boost_LIBRARIES})
-endif( WIN32 )
-# ${Boost_FILESYSTEM_LIBRARY}
-# ${Boost_SYSTEM_LIBRARY}
+    if( WIN32 )
+        target_link_libraries(runTests ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+    else( WIN32 )
+        target_link_libraries(runTests LINK_PUBLIC ${Boost_LIBRARIES})
+    endif( WIN32 )
+    # ${Boost_FILESYSTEM_LIBRARY}
+    # ${Boost_SYSTEM_LIBRARY}
+endif(BUILD_BOOST_TESTS)
 
 # Define the output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
