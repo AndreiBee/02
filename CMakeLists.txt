@@ -67,6 +67,10 @@ if(WIN32)
             VERBATIM
         )
 
+        message("CMAKE_BINARY_DIR: ${CMAKE_BINARY_DIR}")
+        message("CMAKE_SOURCE_DIR: ${CMAKE_SOURCE_DIR}")
+        message("NSIS script: ${CMAKE_BINARY_DIR}/installer.nsi")
+
         # Ensure the executable is built before packaging
         add_dependencies(package IPParser)
     else()

@@ -1,8 +1,8 @@
 ; Name of the installer
-OutFile "@CMAKE_BINARY_DIR@/IPParser.exe"
+OutFile "@CMAKE_BINARY_DIR@\\IPParser.exe"
 
 ; Default installation directory
-InstallDir "$PROGRAMFILES64\IPParser"
+InstallDir "$PROGRAMFILES64\\IPParser"
 
 ; Request application privileges for Windows Vista
 RequestExecutionLevel admin
@@ -14,14 +14,14 @@ Page instfiles
 ; Sections
 Section "MainSection" SEC01
     SetOutPath "$INSTDIR"
-    File "@CMAKE_BINARY_DIR@/Debug/IPParser.exe"
+    File "@CMAKE_BINARY_DIR@\\Debug\\IPParser.exe"
     ; Add more files if needed
-    ; File "path/to/another/file.ext"
+    ; File "path\\to\\another\\file.ext"
 SectionEnd
 
 ; Uninstaller
 Section "Uninstall"
-    Delete "$INSTDIR\IPParser.exe"
+    Delete "$INSTDIR\\IPParser.exe"
     ; Delete any other installed files
     RMDir "$INSTDIR"
 SectionEnd
