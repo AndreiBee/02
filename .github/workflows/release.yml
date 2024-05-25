@@ -36,10 +36,10 @@ jobs:
         run: dir build/Debug
 
       - name: Run tests
-        run: ctest --test-dir build --output-on-failure --build-config Release
+        run: ctest --test-dir build --output-on-failure
 
       - name: Package with CPack
-        run: cmake --build build --target package --config Release
+        run: cmake --build build --target package
 
       - name: Upload Release Asset
         id: upload-release-asset
