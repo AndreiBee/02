@@ -32,8 +32,11 @@ jobs:
       - name: List build directory
         run: dir build
 
+      - name: List x64 directory
+        run: dir build/x64
+
       - name: List Release directory
-        run: dir build/Release
+        run: dir build/x64/Release
 
       - name: Run tests
         run: ctest --test-dir build --output-on-failure --build-config Release
