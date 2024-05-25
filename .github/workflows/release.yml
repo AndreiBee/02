@@ -53,14 +53,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: package
-          path: build/_CPack_Packages/win64/NSIS/
-
-      - name: Upload NSIS Output Log
-        if: failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: NSISOutputLog
-          path: build/_CPack_Packages/win64/NSIS/NSISOutput.log
+          path: build/IPParser.exe
 
   build-ubuntu:
     runs-on: ubuntu-latest
