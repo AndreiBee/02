@@ -79,7 +79,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create Release
-        id: create_release
+        id: create_release_step
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -89,7 +89,7 @@ jobs:
           draft: false
           prerelease: false
         outputs:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.create_release_step.outputs.upload_url }}
 
   upload-windows-asset:
     needs: [create_release, build-windows]
