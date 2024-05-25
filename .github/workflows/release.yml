@@ -56,16 +56,13 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Upload Release Asset
-        id: upload-windows-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Windows Release Asset
+        uses: svenstaro/upload-release-action@v2
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/IPParserInstaller.exe
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./build/IPParserInstaller.exe
           asset_name: IPParserInstaller-1.0.${{ github.run_number }}-win64.exe
-          asset_content_type: application/vnd.microsoft.portable-executable
+          tag: ${{ github.ref }}
 
   build-ubuntu:
     runs-on: ubuntu-latest
@@ -81,6 +78,7 @@ jobs:
         run: |
           cmake -Bbuild -S. -DPATCH_VERSION=${{ github.run_number }}
           cmake --build build
+
       # - name: Run tests
       #   run: |
       #     cd build
@@ -103,13 +101,10 @@ jobs:
       - name: List Build Directory
         run: ls -la build
 
-      - name: Upload Release Asset
-        id: upload-ubuntu-release-asset
-        uses: actions/upload-release-asset@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Ubuntu Release Asset
+        uses: svenstaro/upload-release-action@v2
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/IPParser-1.0.${{ github.run_number }}-Linux.deb
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./build/IPParser-1.0.${{ github.run_number }}-Linux.deb
           asset_name: IPParser-1.0.${{ github.run_number }}-Linux.deb
-          asset_content_type: application/vnd.debian.binary-package
+          tag: ${{ github.ref }}
