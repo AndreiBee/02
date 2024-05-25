@@ -15,14 +15,6 @@ jobs:
         with:
           submodules: true
 
-      - name: Enable step debug logging
-        run: |
-          echo "::group::Set up Debug Logging"
-          echo "Step Debug Logging Enabled"
-          echo "::endgroup::"
-        env:
-          ACTIONS_STEP_DEBUG: true
-
       - name: Set up CMake
         uses: jwlawson/actions-setup-cmake@v1.10
 
@@ -32,7 +24,7 @@ jobs:
           choco install -y boost-msvc-14.2
 
       - name: Configure CMake
-        run: cmake -S . -B build -DCPACK_PACKAGE_VERSION=${{ github.run_number }}
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCPACK_PACKAGE_VERSION=${{ github.run_number }}
 
       - name: Build project
         run: cmake --build build --target ALL_BUILD
@@ -40,20 +32,14 @@ jobs:
       - name: List build directory
         run: dir build
 
-      - name: List Debug directory
-        run: dir build/Debug
+      - name: List Release directory
+        run: dir build/Release
 
       - name: Run tests
-        run: ctest --test-dir build --output-on-failure
+        run: ctest --test-dir build --output-on-failure --build-config Release
 
       - name: Package with CPack
-        run: cmake --build build --target package
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: package
-          path: build/IPParser.exe
+        run: cmake --build build --target package --config Release
 
       - name: Upload Release Asset
         id: upload-release-asset
@@ -63,7 +49,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./build/IPParser.exe
-          asset_name: IPParser-1.0.${{ github.run_number }}-win64.exe
+          asset_name: IPParserInstaller-1.0.${{ github.run_number }}-win64.exe
           asset_content_type: application/vnd.debian.binary-package
 
   build-ubuntu:
