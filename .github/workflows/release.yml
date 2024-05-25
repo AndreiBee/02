@@ -74,6 +74,8 @@ jobs:
   create_release:
     runs-on: ubuntu-latest
     needs: [build-windows, build-ubuntu]
+    outputs:
+      upload_url: ${{ steps.create_release_step.outputs.upload_url }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -88,8 +90,10 @@ jobs:
           release_name: Release ${{ github.run_number }}
           draft: false
           prerelease: false
-        outputs:
-          upload_url: ${{ steps.create_release_step.outputs.upload_url }}
+
+      - name: Set upload_url output
+        id: set_output
+        run: echo "upload_url=${{ steps.create_release_step.outputs.upload_url }}" >> $GITHUB_ENV
 
   upload-windows-asset:
     needs: [create_release, build-windows]
