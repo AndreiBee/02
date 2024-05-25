@@ -50,7 +50,7 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./build/IPParser.exe
           asset_name: IPParserInstaller-1.0.${{ github.run_number }}-win64.exe
-          asset_content_type: application/vnd.debian.binary-package
+          asset_content_type: application/vnd.microsoft.portable-executable
 
   build-ubuntu:
     runs-on: ubuntu-latest
